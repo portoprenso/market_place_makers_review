@@ -86,14 +86,14 @@ export default function Header() {
     let history = useHistory()
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-    const [searchValue, setSearchValue] = useState(getSearchValue)
+    const [searchValue, setSearchValue] = useState(getSearchValue())
     const { getProductsData, productsData } = useContext(productsContext)
     const handleValue = (e) => {
         const search = new URLSearchParams(history.location.search)
         search.set('q', e.target.value)
         history.push(`${history.location.pathname}?${search.toString()}`)
         setSearchValue(e.target.value)
-        getProductsData()
+        getProductsData(history)
     }
 
     function getSearchValue(e) {
