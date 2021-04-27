@@ -14,8 +14,9 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import {useHistory} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {productsContext} from "../../contexts/ProductsContext";
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -87,7 +88,7 @@ export default function Header() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const [searchValue, setSearchValue] = useState(getSearchValue())
-    const { getProductsData, productsData } = useContext(productsContext)
+    const { getProductsData, productsData, cartLength } = useContext(productsContext)
     const handleValue = (e) => {
         const search = new URLSearchParams(history.location.search)
         search.set('q', e.target.value)
@@ -158,11 +159,11 @@ export default function Header() {
             </MenuItem>
             <MenuItem>
                 <IconButton aria-label="show 11 new notifications" color="inherit">
-                    <Badge badgeContent={11} color="secondary">
-                        <NotificationsIcon />
+                    <Badge badgeContent={cartLength} color="secondary">
+                        <ShoppingCartIcon />
                     </Badge>
                 </IconButton>
-                <p>Notifications</p>
+                <p>Cart</p>
             </MenuItem>
             <MenuItem onClick={handleProfileMenuOpen}>
                 <IconButton
@@ -190,9 +191,11 @@ export default function Header() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography className={classes.title} variant="h6" noWrap>
-                        Material-UI
-                    </Typography>
+                    <Link style={{color: "inherit", textDecoration: "none"}} exact to="/">
+                        <Typography className={classes.title} variant="h6" noWrap>
+                            Home Page
+                        </Typography>
+                    </Link>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
@@ -215,11 +218,13 @@ export default function Header() {
                                 <MailIcon />
                             </Badge>
                         </IconButton>
-                        <IconButton aria-label="show 17 new notifications" color="inherit">
-                            <Badge badgeContent={17} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
+                        <Link style={{color: "inherit"}} exact to="/cart" >
+                            <IconButton aria-label="show 17 new notifications" color="inherit">
+                                <Badge badgeContent={cartLength} color="secondary">
+                                    <ShoppingCartIcon />
+                                </Badge>
+                            </IconButton>
+                        </Link>
                         <IconButton
                             edge="end"
                             aria-label="account of current user"

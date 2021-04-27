@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -8,6 +8,7 @@ import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import { productsContext } from '../../contexts/ProductsContext';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProductCard({ item }) {
     const classes = useStyles();
+    const { addProductToCart, checkProductInCart } = useContext(productsContext)
     return (
         <Card className={classes.root}>
             <CardHeader
@@ -42,7 +44,10 @@ export default function ProductCard({ item }) {
                     {`${item.price}сом`}
                 </Typography>
             <CardActions disableSpacing>
-                <IconButton aria-label="share">
+                <IconButton onClick={() =>
+                {addProductToCart(item)}}
+                aria-label="share"
+                color={checkProductInCart(item.id) ? "secondary" : "primary"}>
                     <ShoppingCartIcon />
                 </IconButton>
             </CardActions>
