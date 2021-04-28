@@ -49,9 +49,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn(props) {
     const classes = useStyles();
-
     const { loginUser } = useContext(authContext)
-
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />

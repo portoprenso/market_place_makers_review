@@ -1,13 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {productsContext} from "../../contexts/ProductsContext";
-import {Grid} from "@material-ui/core";
+import {Button, Grid} from "@material-ui/core";
 import ProductCard from "./ProductCard";
 import Pagination from '@material-ui/lab/Pagination';
 import { useHistory } from 'react-router-dom'
+import {authContext} from "../../contexts/AuthContext";
 
 const ProductList = () => {
     const history = useHistory()
     const { getProductsData, productsData, paginationPages } = useContext(productsContext)
+    const { receiveCookie } = useContext(authContext)
     function getPage() {
         const search = new URLSearchParams(history.location.search)
         // console.log(history);
@@ -27,6 +29,7 @@ const ProductList = () => {
     return (
             <>
             <Grid container spacing={3}>
+                <Button onClick={receiveCookie}>Receive Cookie</Button>
                 {
                     productsData.map((item) => (
                         <ProductCard item={item} key={item.id} />

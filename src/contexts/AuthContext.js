@@ -2,10 +2,10 @@ import React, {useReducer } from 'react'
 import { AUTH_API} from "../helpers/constants";
 import axios from "axios";
 import {useHistory} from "react-router-dom";
-import {useCookies} from "react-cookie";
+import Cookies from 'js-cookie';
+
+
 export const authContext =React.createContext();
-
-
 
 const INIT_STATE={}
 const reducer =(state=INIT_STATE,action)=>{
@@ -15,10 +15,7 @@ const reducer =(state=INIT_STATE,action)=>{
 }
 const AuthContextProvider =({children})=>{
     const [state,dispatch] = useReducer(reducer,INIT_STATE)
-    const [ cookies, setCookie, removeCookie ] = useCookies()
-
     const history = useHistory()
-
     function cookieExpireDate() {
         let newDate = Date.now()
         newDate = new Date(newDate).toUTCString()
@@ -26,7 +23,7 @@ const AuthContextProvider =({children})=>{
     }
 
     async function createCookie(mail) {
-        await setCookie('isLogged', {mail}, {expires: 2})
+        await Cookies.set('isLogged', {mail}, {expires: 2})
     }
 
     async function registerUser(e, history) {
@@ -46,11 +43,12 @@ const AuthContextProvider =({children})=>{
     }
 
     function receiveCookie() {
-        // let some = cookies.get('isLogged')
-        // console.log(some)
-        // console.log(cookies.isLogged)
-        let some = cookies.isLogged
+        let some = Cookies.get('isLogged')
         console.log(some)
+    }
+
+    function foo(){
+        console.log("foo");
     }
 
     async function loginUser(e, history) {
